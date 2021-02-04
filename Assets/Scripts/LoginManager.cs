@@ -11,7 +11,7 @@ public class LoginManager : MonoBehaviourPunCallbacks, IPunObservable
     void Awake()
     {
 
-        Screen.SetResolution(960, 540, false);
+        Screen.SetResolution(1920, 1080, true);
         PhotonNetwork.SendRate = 60;
         PhotonNetwork.SerializationRate = 30;
         Debug.Log("¹æ¼³Á¤");

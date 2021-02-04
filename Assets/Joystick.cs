@@ -30,21 +30,22 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(fingerposition);
         MoveDirection();
     }
     void MoveDirection()
     {
+        
         if (TouchScreen)
         {
 
             touchvector = new Vector2(fingerposition.x - joystickholder.position.x, fingerposition.y - joystickholder.position.y);
-            touchvector = Vector2.ClampMagnitude(touchvector, joystickradius);
-            joystick.anchoredPosition = touchvector;
+            //touchvector = Vector2.ClampMagnitude(touchvector, joystickradius);
+            joystick.localPosition = touchvector;
             
             Dir = new Vector3(touchvector.normalized.x, 0f, touchvector.normalized.y);
 
         }
-        char_rotate = new Vector3(0f, Mathf.Atan2(touchvector.normalized.x, touchvector.normalized.y) * Mathf.Rad2Deg, 0f);
         //확인
     }
 
@@ -52,18 +53,21 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
 
     public void OnDrag(PointerEventData eventData)
     {
+        Debug.Log(fingerposition);
         fingerposition = eventData.position;
         TouchScreen = true;
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        Debug.Log(fingerposition);
         fingerposition = eventData.position;
         TouchScreen = true;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {//손떼면 원래위치
+        Debug.Log(fingerposition);
         joystick.transform.position = new Vector2(85,85);
         TouchScreen = false;
         Dir = Vector3.zero;

@@ -49,7 +49,7 @@ public class PlayerScript : MonoBehaviour {
             Look();
             Move();
         }
-        Debug.Log("플레이어 위치" + transform.position);
+        //Debug.Log("플레이어 위치" + transform.position);
 
     }
 
@@ -67,11 +67,18 @@ public class PlayerScript : MonoBehaviour {
     void Move()
     {
 
-        Vector3 moveDir = GameObject.Find("Controller").GetComponent<Joystick>().Dir;
+        Vector3 moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
         moveAmount = Vector3.SmoothDamp(moveAmount, moveDir * (Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed), ref smoothMoveVelocity, smoothTime);
-        RB.transform.eulerAngles= GameObject.Find("Controller").GetComponent<Joystick>().char_rotate;
+        if (moveDir != Vector3.zero)
+        {
+            AN.SetBool("walk", true);
+        }
+        else
+        {
+            AN.SetBool("walk", false);
+        }
     }
- 
+
 
     public void SetGroundedState(bool _grounded)
     {
