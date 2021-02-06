@@ -8,7 +8,7 @@ public class PlayerScript : MonoBehaviour {
 
     [SerializeField] GameObject cameraHolder = null;
     [SerializeField] float mouseSensitivity = 1f, sprintSpeed = 1f, walkSpeed = 1f, smoothTime = 1f;
-
+    [SerializeField] Camera cam;
     float verticalLookRotation;
     bool grounded;
     Vector3 smoothMoveVelocity;
@@ -48,6 +48,8 @@ public class PlayerScript : MonoBehaviour {
         {
             Look();
             Move();
+            Jump();
+            Shoot();
         }
         //Debug.Log("플레이어 위치" + transform.position);
 
@@ -79,12 +81,39 @@ public class PlayerScript : MonoBehaviour {
         }
     }
 
+    void Jump()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            RB.AddForce(Vector3.up*8, ForceMode.Impulse);
+            Debug.Log("점프");
+        }
+        
+    }
+    void Shoot()
+    {
+        if (Input.GetMouseButtonDown(0) == true)
+        {
+            Ray raycast = cam.ViewportPointToRay(new Vector3(0.5f,0.5f));
+            raycast.origin = cam.transform.position;
+            if(Physics.Raycast(raycast,out RaycastHit hit))
+            {
+                Debug.Log(hit.collider.gameObject.name+"를 쐈다");
+            }
+            AN.SetTrigger("shoot");
+            Debug.Log("쏜다");
+            Debug.DrawRay(raycast.origin, raycast.direction * 10f, Color.red, 5f);
+
+     
+        }
+    }
+
 
     public void SetGroundedState(bool _grounded)
     {
-        Debug.Log("바닥상태 변경!");
+        //Debug.Log("바닥상태 변경!");
         grounded = _grounded;
-        Debug.Log(grounded);
+        //Debug.Log(grounded);
     }
 
     void FixedUpdate() //찾아보자

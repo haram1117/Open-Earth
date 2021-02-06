@@ -7,19 +7,8 @@ using Photon.Realtime;
 
 public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
 {
-    public InputField IDInput;
-  
-    public override void OnJoinedRoom()
-    {
-        Spawn();
-    }
-    // Update is called once per frame
-    void Update()
-    {
 
-    }
-
-    public void Spawn()
+    void Start()
     {
         Debug.Log("ÅÂ¾î³µ´Ù");
         PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity);

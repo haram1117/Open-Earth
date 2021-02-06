@@ -14,6 +14,7 @@ public class AuthManager : MonoBehaviour
     public DependencyStatus DependencyStatus;
     public FirebaseAuth auth;
     public FirebaseUser User;
+   
 
     [Header("Login")]
     public InputField emailLoginField;
@@ -43,6 +44,7 @@ public class AuthManager : MonoBehaviour
             }
         });
     }
+   
     private void InitializeFirebase()
     {
         Debug.Log("Setting up Firebase Auth");

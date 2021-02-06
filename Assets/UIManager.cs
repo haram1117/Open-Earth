@@ -9,7 +9,7 @@ public class UIManager : MonoBehaviour
     //Screen object variables
     public GameObject loginUI;
     public GameObject registerUI;
-
+    public GameObject StartUI;
     private void Awake()
     {
         if (instance == null)
@@ -23,6 +23,11 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void Start_Button()
+    {
+        StartUI.SetActive(false);
+        loginUI.SetActive(true);
+    }
     //Functions to change the login screen UI
     public void LoginScreen() //Back button
     {

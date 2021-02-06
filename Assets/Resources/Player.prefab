@@ -92,7 +92,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8954423025689240886}
-  - component: {fileID: 8070123863822232417}
   m_Layer: 0
   m_Name: CameraHolder
   m_TagString: Untagged
@@ -115,18 +114,6 @@ Transform:
   m_Father: {fileID: 6348280129534649998}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 13.11, y: 0, z: 0}
---- !u!114 &8070123863822232417
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4017288494883107105}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96d9ea619f92a4458d1e18afcd03e4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6348280129534296504
 GameObject:
   m_ObjectHideFlags: 0
@@ -750,6 +737,7 @@ GameObject:
   - component: {fileID: 2525633291902386625}
   - component: {fileID: 1016428652022179702}
   - component: {fileID: 5558728588831824842}
+  - component: {fileID: 9053428329952339907}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -813,6 +801,9 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 0
     Name: walk
+  - Type: 9
+    SynchronizeType: 0
+    Name: shoot
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
@@ -900,12 +891,109 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraHolder: {fileID: 4017288494883107105}
   mouseSensitivity: 1
-  sprintSpeed: 1
-  walkSpeed: 1
+  sprintSpeed: 6
+  walkSpeed: 4
   smoothTime: 1
+  cam: {fileID: 5706559163530657794}
   PV: {fileID: 138887742405867823}
   AN: {fileID: 6348280129525097354}
   RB: {fileID: 2525633291902386625}
+--- !u!82 &9053428329952339907
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6348280129534359388}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &6348280129534361152
 GameObject:
   m_ObjectHideFlags: 0

@@ -23,7 +23,7 @@ public class BuildButtonManager : MonoBehaviour
             }
             
         }
-        Debug.Log(BuildButtonOn);
+        //Debug.Log(BuildButtonOn);
     }
     public void BuildTree()
     {
