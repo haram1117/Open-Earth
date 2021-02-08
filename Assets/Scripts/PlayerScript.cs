@@ -5,7 +5,7 @@ using Photon.Pun;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class PlayerScript : MonoBehaviour { 
+public class PlayerScript : MonoBehaviourPunCallbacks, IDamageable{ 
 
     [SerializeField] GameObject cameraHolder = null;
     [SerializeField] float mouseSensitivity = 1f, sprintSpeed = 1f, walkSpeed = 1f, smoothTime = 1f;
@@ -46,8 +46,9 @@ public class PlayerScript : MonoBehaviour {
          //   shootsound = Resources.Load<AudioClip>("shoot");
             Destroy(GetComponentInChildren<Camera>().gameObject);
             Destroy(RB); //이거 해주고 fixed Update에다가 추가해줘야 됨 모르겠어.. 두개의 물리엔진인가봄
-
+            Destroy(GetComponent<AudioListener>());
         }
+        PlayerHP.fillAmount = 1;
 
     }
 
@@ -118,8 +119,9 @@ public class PlayerScript : MonoBehaviour {
                 Debug.Log(hit.collider.gameObject.name+"를 쐈다");
 
                 if (hit.collider.gameObject.tag == "Player")
-                {//그 게임 오브젝트의 Player의 체력을 깎자
-                    hit.collider.gameObject.GetComponent<PlayerScript>().attacked();
+                {
+                    hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(10f);
+                    
                 }
             }
             AN.SetTrigger("shoot");
@@ -130,13 +132,6 @@ public class PlayerScript : MonoBehaviour {
      
         }
     }
-
-    public void attacked()
-    {
-        Debug.Log("공격당했어..");
-        PlayerHP.fillAmount = -0.1f;
-    }
-
 
     public void SetGroundedState(bool _grounded)
     {
@@ -154,4 +149,49 @@ public class PlayerScript : MonoBehaviour {
         RB.MovePosition(RB.position + transform.TransformDirection(moveAmount) * Time.fixedDeltaTime);
     }
 
+    public void TakeDamage(float damage)
+    {
+        PV.RPC("RPC_TakeDamage", RpcTarget.All, damage);
+    }
+
+    [PunRPC]
+    void RPC_TakeDamage(float damage)
+    {
+        if (!PV.IsMine) return;
+        else
+        {
+            Debug.Log("take damage: " + damage);
+            PlayerHP.fillAmount -= 0.1f;
+
+        }
+        //당하는 쪽만 실행 
+        
+
+        /*if (PlayerHP.fillAmount <= 0)
+        {
+            Die();
+        }*/
+    }
+
+    public void TakePortion()
+    {
+        PV.RPC("RPC_TakePortion", RpcTarget.All);
+    }
+
+    [PunRPC]
+
+    void RPC_TakePortion()
+    {
+        if (!PV.IsMine) return;
+        else
+        {
+            PlayerHP.fillAmount += 0.1f;
+        }
+    }
+
+    void Die()
+    {
+        Debug.Log("나죽어..");
+        PhotonNetwork.Destroy(PV);
+    }
 }

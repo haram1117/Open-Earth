@@ -70,7 +70,8 @@ public class LoginManager : MonoBehaviourPunCallbacks, IPunObservable
         PhotonNetwork.JoinOrCreateRoom("Room", new RoomOptions { MaxPlayers = 12 }, null);
         Debug.Log("∑Î¡¢º”");
         PlayerPanel.SetActive(false);
-       
+
+
     }
     public void MatchTeam()
     {

@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
 {
     private float hp = 100;
     [Header("Player_Screen")]
-    public Image hp_image;
+    public Image PlayerHP;
 
     [Header("Item_Screen")]
     public GameObject Item_UI;
@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        hp_image.fillAmount = hp / 100;
+        
         if (Input.GetKeyDown(KeyCode.Tab))
             OpenInventory();
         else if (Input.GetKeyUp(KeyCode.Tab))
@@ -45,6 +45,7 @@ public class Player : MonoBehaviour
     {
         Item_UI.SetActive(false);
     }
+
   
- 
+
 }
