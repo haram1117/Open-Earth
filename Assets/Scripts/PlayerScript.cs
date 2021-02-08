@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviour { 
 
@@ -25,16 +26,24 @@ public class PlayerScript : MonoBehaviour {
     bool TouchScreen;
     Vector2 touchvector;
 
+    public Image PlayerHP;
+
+
+    public AudioSource audioSource;
+    public AudioClip shootsound;
+    public AudioClip footsound;
 
     void Awake()
     {
-
+        
     }
 
     void Start()
     {
         if (!PV.IsMine)
         {
+            audioSource = gameObject.GetComponent<AudioSource>();
+         //   shootsound = Resources.Load<AudioClip>("shoot");
             Destroy(GetComponentInChildren<Camera>().gameObject);
             Destroy(RB); //이거 해주고 fixed Update에다가 추가해줘야 됨 모르겠어.. 두개의 물리엔진인가봄
 
@@ -65,12 +74,18 @@ public class PlayerScript : MonoBehaviour {
 
 
     }
+    public void Move_Sound()
+    {
+        audioSource.clip = footsound;
+        audioSource.Play();
+    }
 
     void Move()
     {
 
         Vector3 moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
         moveAmount = Vector3.SmoothDamp(moveAmount, moveDir * (Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed), ref smoothMoveVelocity, smoothTime);
+        
         if (moveDir != Vector3.zero)
         {
             AN.SetBool("walk", true);
@@ -94,18 +109,32 @@ public class PlayerScript : MonoBehaviour {
     {
         if (Input.GetMouseButtonDown(0) == true)
         {
-            Ray raycast = cam.ViewportPointToRay(new Vector3(0.5f,0.5f));
+            
+            
+            Ray raycast = cam.ViewportPointToRay(new Vector3(0.5f,0.5f)); //확인
             raycast.origin = cam.transform.position;
             if(Physics.Raycast(raycast,out RaycastHit hit))
             {
                 Debug.Log(hit.collider.gameObject.name+"를 쐈다");
+
+                if (hit.collider.gameObject.tag == "Player")
+                {//그 게임 오브젝트의 Player의 체력을 깎자
+                    hit.collider.gameObject.GetComponent<PlayerScript>().attacked();
+                }
             }
             AN.SetTrigger("shoot");
             Debug.Log("쏜다");
-            Debug.DrawRay(raycast.origin, raycast.direction * 10f, Color.red, 5f);
+            audioSource.PlayOneShot(shootsound);
+            Debug.DrawRay(raycast.origin, raycast.direction * 1000f, Color.red, 5f);
 
      
         }
+    }
+
+    public void attacked()
+    {
+        Debug.Log("공격당했어..");
+        PlayerHP.fillAmount = -0.1f;
     }
 
 

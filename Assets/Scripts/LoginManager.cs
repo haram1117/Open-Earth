@@ -18,7 +18,7 @@ public class LoginManager : MonoBehaviourPunCallbacks, IPunObservable
 
     GameObject player;
 
-    int whichteam;
+    public static int whichteam;
 
 
 
@@ -30,6 +30,11 @@ public class LoginManager : MonoBehaviourPunCallbacks, IPunObservable
         PhotonNetwork.SerializationRate = 30;
         Debug.Log("방설정");
 
+    }
+
+    void Start()
+    {
+        PhotonNetwork.AutomaticallySyncScene = true;
     }
 
     public void Connect()
@@ -65,6 +70,7 @@ public class LoginManager : MonoBehaviourPunCallbacks, IPunObservable
         PhotonNetwork.JoinOrCreateRoom("Room", new RoomOptions { MaxPlayers = 12 }, null);
         Debug.Log("룸접속");
         PlayerPanel.SetActive(false);
+       
     }
     public void MatchTeam()
     {
@@ -73,6 +79,7 @@ public class LoginManager : MonoBehaviourPunCallbacks, IPunObservable
             print(PhotonNetwork.PlayerList[i].NickName);
             if (i % 3 == 0)
             {
+                PhotonNetwork.LocalPlayer.CustomProperties["Team"]=1;
                 player=PhotonNetwork.Instantiate("PlayerKit", Vector3.zero, Quaternion.identity);
                 player.transform.SetParent(Team1.transform);
                 player.GetComponent<UnityEngine.UI.Text>().text = PhotonNetwork.PlayerList[i].NickName;
@@ -80,6 +87,7 @@ public class LoginManager : MonoBehaviourPunCallbacks, IPunObservable
             }
             else if (i % 3 == 1)
             {
+                PhotonNetwork.LocalPlayer.CustomProperties["Team"] = 2;
                 player = PhotonNetwork.Instantiate("PlayerKit", Vector3.zero, Quaternion.identity);
                 player.transform.SetParent(Team2.transform);
                 player.GetComponent<UnityEngine.UI.Text>().text = PhotonNetwork.PlayerList[i].NickName;
@@ -87,6 +95,7 @@ public class LoginManager : MonoBehaviourPunCallbacks, IPunObservable
             }
             else
             {
+                PhotonNetwork.LocalPlayer.CustomProperties["Team"] = 3;
                 player = PhotonNetwork.Instantiate("PlayerKit", Vector3.zero, Quaternion.identity);
                 player.transform.SetParent(Team3.transform);
                 player.GetComponent<UnityEngine.UI.Text>().text = PhotonNetwork.PlayerList[i].NickName;
@@ -119,7 +128,13 @@ public class LoginManager : MonoBehaviourPunCallbacks, IPunObservable
     }
     public void Ready()
     {
-        PhotonNetwork.LoadLevel(1);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.IsMessageQueueRunning = false;
+            PhotonNetwork.LoadLevel(1);
+        }
+        
+        
     }
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
