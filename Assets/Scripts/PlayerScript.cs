@@ -6,7 +6,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Photon.Realtime;
 
-public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable{ 
+public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
+{
 
     [SerializeField] GameObject cameraHolder = null;
     [SerializeField] float mouseSensitivity = 1f, sprintSpeed = 1f, walkSpeed = 1f, smoothTime = 1f;
@@ -38,9 +39,10 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable{
     GameObject CurrentBullet;
     bool shootable;
 
+    GameObject Test;
     void Awake()
     {
-        
+
     }
 
     void Start()
@@ -55,6 +57,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable{
             Destroy(GetComponent<AudioListener>());
         }
         //PlayerHP.fillAmount = 1;
+        Test = GameObject.Find("Item").transform.GetChild(0).gameObject;
 
     }
 
@@ -92,7 +95,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable{
 
         Vector3 moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
         moveAmount = Vector3.SmoothDamp(moveAmount, moveDir * (Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed), ref smoothMoveVelocity, smoothTime);
-        
+
         if (moveDir != Vector3.zero)
         {
             AN.SetBool("walk", true);
@@ -101,46 +104,50 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable{
         {
             AN.SetBool("walk", false);
         }
+        Debug.Log(Test.name);
     }
 
     void Jump()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            RB.AddForce(Vector3.up*8, ForceMode.Impulse);
+            RB.AddForce(Vector3.up * 8, ForceMode.Impulse);
             Debug.Log("점프");
         }
-        
+
     }
     void Shoot()
-     {  Transform[] allitem = Myitem.GetComponentsInChildren<Transform>(true);
-           for (int i = 0; i < allitem.Length; i++)
-           {
-            if (allitem[i].gameObject.name == "bullet")
+    {
+        Debug.Log("자식" + Test.transform.GetChild(6).gameObject.name);
+        Myitem = Test.transform.GetChild(6).gameObject;
+        shootable = false;
+        int count_item = Myitem.transform.childCount;
+        Debug.Log("아이템몇개?" + count_item);
+
+        for (int i = 0; i < count_item; i++)
+        {
+            if (Myitem.transform.GetChild(i).gameObject.tag == "bullet")
             {
-                CurrentBullet = allitem[i].gameObject;
+                CurrentBullet = Myitem.transform.GetChild(i).gameObject;
                 shootable = true;
+                Debug.Log("총알찾았당" + shootable);
                 break;
-                
-                    }
+
+            }
             else
             {
                 shootable = false;
             }
-            Debug.Log(allitem[i].gameObject.name); 
-                }
-
-        
-            //Debug.Log("자식"+Myitem.transform.GetChild(0).gameObject.name);
-        if (Input.GetMouseButtonDown(0) == true & shootable)
+            Debug.Log("이름:" + Myitem.transform.GetChild(i).gameObject.name);
+            Debug.Log("shootable:" + shootable);
+        }
+        if (Input.GetMouseButtonDown(0) == true && shootable && !Input.GetKeyDown(KeyCode.Tab))
         {
-            
-            
-            Ray raycast = cam.ViewportPointToRay(new Vector3(0.5f,0.5f)); //확인
+            Ray raycast = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f)); //확인
             raycast.origin = cam.transform.position;
-            if(Physics.Raycast(raycast,out RaycastHit hit))
+            if (Physics.Raycast(raycast, out RaycastHit hit))
             {
-                Debug.Log(hit.collider.gameObject.name+"를 쐈다");
+                Debug.Log(hit.collider.gameObject.name + "를 쐈다");
 
                 if (hit.collider.gameObject.tag == "Player")
                 {
@@ -150,12 +157,10 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable{
             }
             AN.SetTrigger("shoot");
             Debug.Log("쏜다");
-            
+
             CurrentBullet.GetComponent<mybullet>().Use_Bullet();
             audioSource.PlayOneShot(shootsound);
             Debug.DrawRay(raycast.origin, raycast.direction * 1000f, Color.red, 5f);
-
-     
         }
         else
         {
@@ -193,11 +198,11 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable{
         {
             Debug.Log("당했다");
             PlayerHP.GetComponent<HealthManager>().Damaged();
-            
+
 
         }
         //당하는 쪽만 실행 
-        
+
 
         /*if (PlayerHP.fillAmount <= 0)
         {
@@ -226,7 +231,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable{
         Debug.Log("나죽어..");
         PhotonNetwork.Destroy(PV);
     }
-    
+
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {/*
         if (stream.IsWriting)

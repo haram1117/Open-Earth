@@ -6,6 +6,7 @@ public class mybullet : MonoBehaviour
 {
 
     int bulletLeft=10;
+    public Text BulletLeft;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,5 +33,6 @@ public class mybullet : MonoBehaviour
         }
 
         Debug.Log("³²Àº ÃÑ¾Ë"+bulletLeft);
+        BulletLeft.text = bulletLeft.ToString();
     }
 }

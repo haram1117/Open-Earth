@@ -9,6 +9,7 @@ TagManager:
   - ExplosiveBarrel
   - Ground
   - SpawnPoint
+  - bullet
   layers:
   - Default
   - TransparentFX
