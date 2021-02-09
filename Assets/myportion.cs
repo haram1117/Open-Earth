@@ -5,18 +5,22 @@ using UnityEngine.UI;
 
 public class myportion : MonoBehaviour
 {
-    int portionLeft=1;
+    public static int portionLeft=1;
+   public Image HEALTH;
 
+    void Start()
+    {
+        
+    }
     private void Update()
     {
-        if (portionLeft <= 0)
-        {
-            Delete();
-        }
     }
 
-    public void Delete()
+    public void Use_Portion()
     {
+        HEALTH.fillAmount += 0.1f;
+        portionLeft = 0;
         Destroy(gameObject);
     }
+
 }

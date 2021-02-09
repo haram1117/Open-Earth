@@ -34,6 +34,10 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable{
     public AudioClip shootsound;
     public AudioClip footsound;
 
+    public GameObject Myitem;
+    GameObject CurrentBullet;
+    bool shootable;
+
     void Awake()
     {
         
@@ -109,8 +113,26 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable{
         
     }
     void Shoot()
-    {
-        if (Input.GetMouseButtonDown(0) == true)
+     {  Transform[] allitem = Myitem.GetComponentsInChildren<Transform>(true);
+           for (int i = 0; i < allitem.Length; i++)
+           {
+            if (allitem[i].gameObject.name == "bullet")
+            {
+                CurrentBullet = allitem[i].gameObject;
+                shootable = true;
+                break;
+                
+                    }
+            else
+            {
+                shootable = false;
+            }
+            Debug.Log(allitem[i].gameObject.name); 
+                }
+
+        
+            //Debug.Log("ÀÚ½Ä"+Myitem.transform.GetChild(0).gameObject.name);
+        if (Input.GetMouseButtonDown(0) == true & shootable)
         {
             
             
@@ -122,20 +144,22 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable{
 
                 if (hit.collider.gameObject.tag == "Player")
                 {
-                    //hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(10f);
-                    //hit.collider.gameObject.GetComponent<PlayerScript>().attacked(hit.collider.gameObject);
-                    //hit.collider.gameObject.GetComponent<PlayerScript>().PlayerHP.fillAmount -= 0.1f;
                     Debug.Log(hit.collider.gameObject.name);
-                    //hit.collider.gameObject.GetComponent<PlayerScript>().PlayerHP.fillAmount -= 0.1f;
                     hit.collider.gameObject.GetPhotonView().RPC("RPC_TakeDamage", RpcTarget.All);
                 }
             }
             AN.SetTrigger("shoot");
             Debug.Log("½ð´Ù");
+            
+            CurrentBullet.GetComponent<mybullet>().Use_Bullet();
             audioSource.PlayOneShot(shootsound);
             Debug.DrawRay(raycast.origin, raycast.direction * 1000f, Color.red, 5f);
 
      
+        }
+        else
+        {
+            Debug.Log("ÃÑ¾Ë ¾ø´Ù");
         }
     }
 

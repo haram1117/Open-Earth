@@ -28,7 +28,7 @@ public class BackPackManager : MonoBehaviour
         }
 
 
-        Debug.Log(itemCount);
+        
     }
 
     public void AddPortion()

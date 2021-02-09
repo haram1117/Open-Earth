@@ -21,4 +21,16 @@ public class mybullet : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    public void Use_Bullet()
+    {
+        bulletLeft--;
+        if (bulletLeft == 0)
+        {
+            Delete();
+            Debug.Log("ÃÑ¾Ë»èÁ¦");
+        }
+
+        Debug.Log("³²Àº ÃÑ¾Ë"+bulletLeft);
+    }
 }
