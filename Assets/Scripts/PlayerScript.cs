@@ -4,8 +4,9 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Photon.Realtime;
 
-public class PlayerScript : MonoBehaviourPunCallbacks, IDamageable{ 
+public class PlayerScript : MonoBehaviourPunCallbacks, IDamageable, IPunObservable{ 
 
     [SerializeField] GameObject cameraHolder = null;
     [SerializeField] float mouseSensitivity = 1f, sprintSpeed = 1f, walkSpeed = 1f, smoothTime = 1f;
@@ -27,7 +28,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IDamageable{
     Vector2 touchvector;
 
     public Image PlayerHP;
-
+    public float player_hp = 100;
 
     public AudioSource audioSource;
     public AudioClip shootsound;
@@ -48,7 +49,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IDamageable{
             Destroy(RB); //이거 해주고 fixed Update에다가 추가해줘야 됨 모르겠어.. 두개의 물리엔진인가봄
             Destroy(GetComponent<AudioListener>());
         }
-        PlayerHP.fillAmount = 1;
+        //PlayerHP.fillAmount = 1;
 
     }
 
@@ -59,7 +60,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IDamageable{
             Look();
             Move();
             Jump();
-            Shoot();
+            //Shoot();
         }
         //Debug.Log("플레이어 위치" + transform.position);
 
@@ -120,8 +121,11 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IDamageable{
 
                 if (hit.collider.gameObject.tag == "Player")
                 {
-                    hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(10f);
-                    
+                    //hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(10f);
+                    //hit.collider.gameObject.GetComponent<PlayerScript>().attacked(hit.collider.gameObject);
+                    //hit.collider.gameObject.GetComponent<PlayerScript>().PlayerHP.fillAmount -= 0.1f;
+                    Debug.Log(hit.collider.gameObject.name);
+                    hit.collider.gameObject.GetComponent<PlayerScript>().PlayerHP.fillAmount -= 0.1f;
                 }
             }
             AN.SetTrigger("shoot");
@@ -131,6 +135,11 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IDamageable{
 
      
         }
+    }
+
+    public void attacked(GameObject gameObject)
+    {
+        gameObject.GetComponent<PlayerScript>().PlayerHP.fillAmount -= 0.1f;
     }
 
     public void SetGroundedState(bool _grounded)
@@ -151,7 +160,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IDamageable{
 
     public void TakeDamage(float damage)
     {
-        PV.RPC("RPC_TakeDamage", RpcTarget.All, damage);
+        PV.RPC("RPC_TakeDamage", RpcTarget.AllBufferedViaServer, damage);
     }
 
     [PunRPC]
@@ -160,8 +169,9 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IDamageable{
         if (!PV.IsMine) return;
         else
         {
-            Debug.Log("take damage: " + damage);
+
             PlayerHP.fillAmount -= 0.1f;
+            
 
         }
         //당하는 쪽만 실행 
@@ -193,5 +203,17 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IDamageable{
     {
         Debug.Log("나죽어..");
         PhotonNetwork.Destroy(PV);
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(PlayerHP.fillAmount);
+        }
+        else
+        {
+            PlayerHP.fillAmount = (float)stream.ReceiveNext();
+        }
     }
 }

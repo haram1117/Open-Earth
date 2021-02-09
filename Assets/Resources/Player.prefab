@@ -186,7 +186,6 @@ GameObject:
   - component: {fileID: 6164695158303338051}
   - component: {fileID: 6164695158303338197}
   - component: {fileID: 6164695158303338199}
-  - component: {fileID: 8791059436232316908}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -210,7 +209,6 @@ Transform:
   - {fileID: 6164695158303334702}
   - {fileID: 6164695158303334712}
   - {fileID: 6164695158303334730}
-  - {fileID: 6164695158303334731}
   - {fileID: 6164695158303338108}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -279,6 +277,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 6164695158303338048}
   - {fileID: 6164695158303338050}
+  - {fileID: 6164695158303338051}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -350,6 +349,7 @@ MonoBehaviour:
   AN: {fileID: 6164695158303338192}
   RB: {fileID: 6164695158303338270}
   PlayerHP: {fileID: 6164695158303338073}
+  player_hp: 100
   audioSource: {fileID: 6164695158303338197}
   shootsound: {fileID: 8300000, guid: 38b450e2adcb6f542acc8c1d423bd8dc, type: 3}
   footsound: {fileID: 8300000, guid: fb13f8d4293a800448edac22fbabfa84, type: 3}
@@ -457,19 +457,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6164695158303335461}
   m_Enabled: 1
---- !u!114 &8791059436232316908
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6164695158303335461}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c975d21fdf908c439e1a235bf4b4e18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlayerHP: {fileID: 6164695158303338073}
 --- !u!1 &6164695158303335462
 GameObject:
   m_ObjectHideFlags: 0
@@ -607,36 +594,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1 &6164695158303335470
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6164695158303334731}
-  m_Layer: 6
-  m_Name: Gunpos
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6164695158303334731
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6164695158303335470}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.051, y: 0.687, z: 0.578}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 6164695158303334703}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6164695158303335471
 GameObject:
   m_ObjectHideFlags: 0
@@ -1570,6 +1527,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6164695158303334730}
+  - component: {fileID: 6921199838530129805}
   m_Layer: 6
   m_Name: CameraHolder
   m_TagString: Untagged
@@ -1592,6 +1550,24 @@ Transform:
   m_Father: {fileID: 6164695158303334703}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0.282, y: 0, z: 0}
+--- !u!114 &6921199838530129805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6164695158303335500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c975d21fdf908c439e1a235bf4b4e18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AN: {fileID: 6164695158303338192}
+  audioSource: {fileID: 6164695158303338197}
+  shootsound: {fileID: 8300000, guid: 38b450e2adcb6f542acc8c1d423bd8dc, type: 3}
+  cam: {fileID: 6164695158303335226}
+  PlayerHP: {fileID: 6164695158303338073}
+  PV: {fileID: 6164695158303338053}
 --- !u!1 &6164695158303335501
 GameObject:
   m_ObjectHideFlags: 0
@@ -1843,7 +1819,7 @@ RectTransform:
   m_Children:
   - {fileID: 6164695158303338137}
   m_Father: {fileID: 6164695158303334703}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

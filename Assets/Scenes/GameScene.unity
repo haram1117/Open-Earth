@@ -16968,7 +16968,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myItem: {fileID: 3555531795683179403}
   BulletPrefab: {fileID: 4403440316551411680, guid: 3f5620ff3c080e045b4c6f6e1ed51bf1, type: 3}
-  PortionPrefab: {fileID: 4085322003256922520, guid: 86f8d2a089a66a343a9c6cf31b5c7623, type: 3}
+  PortionPrefab: {fileID: 9117793909502493777, guid: 234c79904caa9b64faabb81f1ffd49d8, type: 3}
 --- !u!4 &1889471252
 Transform:
   m_ObjectHideFlags: 0
