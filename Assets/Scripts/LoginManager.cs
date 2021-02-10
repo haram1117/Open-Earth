@@ -19,7 +19,7 @@ public class LoginManager : MonoBehaviourPunCallbacks, IPunObservable
     GameObject player;
 
     public static int whichteam;
-
+    public static int jobnumber;
 
 
     void Awake()
@@ -103,6 +103,27 @@ public class LoginManager : MonoBehaviourPunCallbacks, IPunObservable
                 whichteam = 3;
             }
         }
+    }
+
+    public void Hunter()
+    {
+        jobnumber = 1;
+    }
+    public void Bomber()
+    {
+        jobnumber = 2;
+    }
+    public void Healer()
+    {
+        jobnumber = 3;
+    }
+    public void Deliver()
+    {
+        jobnumber = 4;
+    }
+    public void Rader()
+    {
+        jobnumber = 5;
     }
 
     public void Info()
