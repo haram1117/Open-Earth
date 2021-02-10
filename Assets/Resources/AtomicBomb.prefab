@@ -176,7 +176,7 @@ GameObject:
   - component: {fileID: 4194318230679168041}
   m_Layer: 0
   m_Name: AtomicBomb
-  m_TagString: Untagged
+  m_TagString: Bomb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -208,8 +208,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.6299217, y: 2.249518, z: 5.5436997}
-  m_Center: {x: -0.0051633418, y: 1.120435, z: -1.2185371}
+  m_Size: {x: 5.7053585, y: 6.7054152, z: 5.5436997}
+  m_Center: {x: 0.437528, y: 1.4747338, z: -1.2185371}
 --- !u!54 &4194318230679168040
 Rigidbody:
   m_ObjectHideFlags: 0

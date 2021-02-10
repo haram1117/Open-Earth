@@ -73,7 +73,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
     }
     void born_Rader()
     {
-        PhotonNetwork.Instantiate("Player_Rader", point[(int)PhotonNetwork.LocalPlayer.CustomProperties["Team"] - 1].transform.position, point[(int)PhotonNetwork.LocalPlayer.CustomProperties["Team"] - 1].transform.rotation);
+        PhotonNetwork.Instantiate("Player_Radar", point[(int)PhotonNetwork.LocalPlayer.CustomProperties["Team"] - 1].transform.position, point[(int)PhotonNetwork.LocalPlayer.CustomProperties["Team"] - 1].transform.rotation);
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

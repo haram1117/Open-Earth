@@ -17845,6 +17845,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AtomicBomb
       objectReference: {fileID: 0}
+    - target: {fileID: 4193047546436786015, guid: b7f70887d8863514694624f3a721b23e, type: 3}
+      propertyPath: m_TagString
+      value: Bomb
+      objectReference: {fileID: 0}
     - target: {fileID: 4196029439468290219, guid: b7f70887d8863514694624f3a721b23e, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -17859,7 +17863,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4196029439468290219, guid: b7f70887d8863514694624f3a721b23e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -32.6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4196029439468290219, guid: b7f70887d8863514694624f3a721b23e, type: 3}
       propertyPath: m_LocalRotation.w

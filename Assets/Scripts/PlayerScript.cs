@@ -228,6 +228,15 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
         PhotonNetwork.Destroy(PV);
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Bomb")
+        {
+            Debug.Log("ÆøÅº¸Â¾Ò´Ù..");
+            PlayerHP.fillAmount -= 0.5f;
+        }
+    }
+
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {/*
         if (stream.IsWriting)
