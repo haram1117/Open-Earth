@@ -61,7 +61,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
     }
     void born_Bomber()
     {
-        PhotonNetwork.Instantiate("Player_Bomber", point[(int)PhotonNetwork.LocalPlayer.CustomProperties["Team"] - 1].transform.position, point[(int)PhotonNetwork.LocalPlayer.CustomProperties["Team"] - 1].transform.rotation);
+        PhotonNetwork.Instantiate("Player_Bomb", point[(int)PhotonNetwork.LocalPlayer.CustomProperties["Team"] - 1].transform.position, point[(int)PhotonNetwork.LocalPlayer.CustomProperties["Team"] - 1].transform.rotation);
     }
     void born_Healer()
     {

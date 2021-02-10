@@ -29,5 +29,6 @@ public class HealthManager : MonoBehaviour
         HEALTH.fillAmount -= 0.1f;
     }
 
-    
+
+
 }

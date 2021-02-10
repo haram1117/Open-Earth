@@ -168,10 +168,6 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
-    public void attacked(GameObject gameObject)
-    {
-        gameObject.GetComponent<PlayerScript>().PlayerHP.fillAmount -= 0.1f;
-    }
 
     public void SetGroundedState(bool _grounded)
     {
